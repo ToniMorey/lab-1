@@ -181,7 +181,7 @@ def KNN(data):
     from sklearn.preprocessing import StandardScaler
 
 
-    x=data[list(data.drop(columns=['Producto', 'Supermercado']).columns)]
+    x=data[list(data.drop(columns=['Producto', 'Supermercado','Categoria','Sal','Kcal']).columns)]
     scaler=StandardScaler()
     x_prep=scaler.fit_transform(x)
 
@@ -206,11 +206,3 @@ def KNN(data):
     data['Cluster_Kmeans'] = cluster
 
     return data['Cluster_Kmeans'].value_counts()
-
-
-def encontrar_productos_similares(producto, dataframe, n=6, cutoff=60):
-    from fuzzywuzzy import process
-    productos = dataframe['Producto'].tolist()
-    coincidencias = process.extract(producto, productos, limit=n)
-    coincidencias = [item[0] for item in coincidencias if item[1] >= cutoff]
-    return coincidencias
